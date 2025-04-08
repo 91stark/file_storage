@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="logout">
+        <a href="/logout">Logout</a>
+    </div>
+    <h2>Welcome, {{ session['username'] }}</h2>
+
+    <!-- Centered Upload Form -->
+    <form class="upload" method="POST" action="/upload" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <button type="submit">Upload File</button>
+    </form>
+
+    <div class="dashboard-container">
+        <h3>Your Files:</h3>
+        <ul class="file-list">
+            {% for file in files %}
+            <li>
+                <a href="{{ file.filepath }}" download>{{ file.filename }}</a>
+                <form method="POST" action="/delete/{{ file.id }}" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
